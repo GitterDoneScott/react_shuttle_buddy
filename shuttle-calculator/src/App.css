@@ -1,0 +1,119 @@
+/* Base styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Block: App */
+.App {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+/* Block: Form */
+.Form__label {
+  display: block;
+  margin-top: 10px;
+}
+
+.Form__input,
+.Form__button {
+  margin: 5px;
+}
+
+/* Block: Table Container */
+.Table-container {
+  overflow-x: auto;
+}
+
+/* Block: Table */
+.Table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.Table__header,
+.Table__data {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.Table__header {
+  background-color: #f2f2f2;
+}
+
+/* Block: Table Row */
+.TableRow--selected {
+  background-color: #90EE90;
+}
+
+/* Block: Error */
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+  
+  input, button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .Table-container {
+    margin: 0 -10px;
+  }
+
+  /* Card-based layout for table on mobile */
+  .Table, .Table__header, .Table__data {
+    display: block;
+  }
+
+  .Table__header {
+    display: none; /* hide headers */
+  }
+
+  .Table__data {
+    margin-bottom: 0.5rem;
+    border: none; /* remove border */
+  }
+
+  .Table__data::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .TableRow--selected {
+    background-color: #90EE90;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px; /* optional: for spacing between groups */
+  }
+  
+  .form-group label {
+    flex: 1;
+    margin-right: 10px; /* optional: for spacing between label and input */
+  }
+  
+  .form-group input {
+    flex: 2;
+  }
+
+}
