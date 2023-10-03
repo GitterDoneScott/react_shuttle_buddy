@@ -5,7 +5,7 @@ import './App.css';
 
 const db = new Dexie('VehiclesDB');
 db.version(1).stores({
-  vehicles: '++id, description, passengerCapacity, boatCapacity'
+  vehicles: '++id, description, boaterCapacity, boatCapacity'
 });
 
 
@@ -13,7 +13,7 @@ db.version(1).stores({
 function App() {
   const [vehicles, setVehicles] = useState([]);
   const [totalBoats, setTotalBoats] = useState('');
-  const [totalPaddlers, setTotalPaddlers] = useState('');
+  const [totalBoaters, setTotalBoaters] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -40,29 +40,29 @@ function App() {
 
   const calculate = () => {
     const totalBoatsNum = parseInt(totalBoats, 10);
-    const totalPaddlersNum = parseInt(totalPaddlers, 10);
+    const totalBoatersNum = parseInt(totalBoaters, 10);
     setError('');
 
-    if (isNaN(totalBoatsNum) || isNaN(totalPaddlersNum) || totalBoatsNum < 0 || totalPaddlersNum < 0) {
-      setError('Please enter valid numbers for total boats and paddlers.');
+    if (isNaN(totalBoatsNum) || isNaN(totalBoatersNum) || totalBoatsNum < 0 || totalBoatersNum < 0) {
+      setError('Please enter valid numbers for total boats and boaters.');
       return;
     }
 
-    const sortedVehicles = [...vehicles].sort((a, b) => (b.passengerCapacity + b.boatCapacity) - (a.passengerCapacity + a.boatCapacity));
+    const sortedVehicles = [...vehicles].sort((a, b) => (b.boaterCapacity + b.boatCapacity) - (a.boaterCapacity + a.boatCapacity));
 
     let remainingBoats = totalBoatsNum;
-    let remainingPaddlers = totalPaddlersNum;
+    let remainingBoaters = totalBoatersNum;
     const selectedVehicles = [];
 
     for (let vehicle of sortedVehicles) {
-      if (remainingBoats > 0 || remainingPaddlers > 0) {
+      if (remainingBoats > 0 || remainingBoaters > 0) {
         const canCarryBoats = Math.min(vehicle.boatCapacity, remainingBoats);
-        const canCarryPaddlers = Math.min(vehicle.passengerCapacity, remainingPaddlers);
+        const canCarryBoaters = Math.min(vehicle.boaterCapacity, remainingBoaters);
 
-        if (canCarryBoats > 0 || canCarryPaddlers > 0) {
+        if (canCarryBoats > 0 || canCarryBoaters > 0) {
           selectedVehicles.push({ ...vehicle, isSelected: true });
           remainingBoats -= canCarryBoats;
-          remainingPaddlers -= canCarryPaddlers;
+          remainingBoaters -= canCarryBoaters;
         } else {
           selectedVehicles.push({ ...vehicle, isSelected: false });
         }
@@ -71,8 +71,8 @@ function App() {
       }
     }
 
-    if (remainingBoats > 0 || remainingPaddlers > 0) {
-      setError('Not enough capacity to shuttle all boats and paddlers.');
+    if (remainingBoats > 0 || remainingBoaters > 0) {
+      setError('Not enough capacity to shuttle all boats and boaters.');
     }
 
     setVehicles(selectedVehicles);
@@ -80,79 +80,80 @@ function App() {
 
   return (
     <div className="App">
-      <label>
-        Total Boats:
-        <input
-          type="number"
-          value={totalBoats}
-          onChange={e => setTotalBoats(e.target.value)}
-          placeholder="Total Boats"
-        />
-      </label>
-      <label>
-        Total Paddlers:
-        <input
-          type="number"
-          value={totalPaddlers}
-          onChange={e => setTotalPaddlers(e.target.value)}
-          placeholder="Total Paddlers"
-        />
-      </label>
+        <div className="input-group">
+            <label>Total Boats:</label>
+            <input
+                type="number"
+                value={totalBoats}
+                onChange={e => setTotalBoats(e.target.value)}
+                placeholder="Total Boats"
+            />
+        </div>
+        <div className="input-group">
+            <label>Total Boaters:</label>
+            <input
+                type="number"
+                value={totalBoaters}
+                onChange={e => setTotalBoaters(e.target.value)}
+                placeholder="Total Boaters"
+            />
+        </div>
+        <hr className="section-break" />  {/* Horizontal line */}
       <VehicleForm onAddVehicle={addVehicle} />
-      <VehicleTable vehicles={vehicles} onRemoveVehicle={removeVehicle} onClearVehicles={clearVehicles} />
-
-      <button onClick={calculate}>Calculate</button>
       {error && <div className="error">{error}</div>}
+      <VehicleTable vehicles={vehicles} onRemoveVehicle={removeVehicle} onClearVehicles={clearVehicles} />
+      <button onClick={calculate}>Calculate</button>
+
     </div>
   );
 }
 
 function VehicleForm({ onAddVehicle }) {
   const [description, setDescription] = useState('');
-  const [passengerCapacity, setPassengerCapacity] = useState('');
+  const [boaterCapacity, setboaterCapacity] = useState('');
   const [boatCapacity, setBoatCapacity] = useState('');
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onAddVehicle({ description, passengerCapacity: parseInt(passengerCapacity, 10), boatCapacity: parseInt(boatCapacity, 10) });
+    onAddVehicle({ description, boaterCapacity: parseInt(boaterCapacity, 10), boatCapacity: parseInt(boatCapacity, 10) });
     setDescription('');
-    setPassengerCapacity('');
+    setboaterCapacity('');
     setBoatCapacity('');
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <label>
-        Vehicle Description:
-        <input
-          type="text"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-          placeholder="Vehicle Description"
-          required
-        />
-      </label>
-      <label>
-        Passenger Capacity:
-        <input
-          type="number"
-          value={passengerCapacity}
-          onChange={e => setPassengerCapacity(e.target.value)}
-          placeholder="Passenger Capacity"
-          required
-        />
-      </label>
-      <label>
-        Boat Capacity:
-        <input
-          type="number"
-          value={boatCapacity}
-          onChange={e => setBoatCapacity(e.target.value)}
-          placeholder="Boat Capacity"
-          required
-        />
-      </label>
-      <button type="submit">Add Vehicle</button>
+    <form onSubmit={submitHandler} className="VehicleForm">
+        <div className="input-group">
+            <label>Vehicle Description:</label>
+            <input
+                type="text"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+                placeholder="Vehicle Description"
+                required
+            />
+        </div>
+        <div className="input-group">
+            <label>Boater Capacity:</label>
+            <input
+                type="number"
+                value={boaterCapacity}
+                onChange={e => setboaterCapacity(e.target.value)}
+                placeholder="Boater Capacity"
+                required
+            />
+        </div>
+        <div className="input-group">
+            <label>Boat Capacity:</label>
+            <input
+                type="number"
+                value={boatCapacity}
+                onChange={e => setBoatCapacity(e.target.value)}
+                placeholder="Boat Capacity"
+                required
+            />
+        </div>
+        <button type="submit">Add Vehicle</button>
     </form>
   );
 }
@@ -163,8 +164,8 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
       <table className="Table">
         <thead>
           <tr>
-            <th>Description</th>
-            <th>Passenger Capacity</th>
+            <th>Vehicle Description</th>
+            <th>Boater Capacity</th>
             <th>Boat Capacity</th>
             <th>Action</th>
           </tr>
@@ -173,14 +174,21 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
           {vehicles.map(vehicle => (
             <tr key={vehicle.id} className={vehicle.isSelected ? 'TableRow--selected' : ''}>
               <td data-label="Description">{vehicle.description}</td>
-              <td data-label="Passenger Capacity">{vehicle.passengerCapacity}</td>
+              <td data-label="Boater Capacity">{vehicle.boaterCapacity}</td>
               <td data-label="Boat Capacity">{vehicle.boatCapacity}</td>
               <td data-label="Action"><button onClick={() => onRemoveVehicle(vehicle.id)}>Remove</button></td>
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="3"></td>  {/* Empty cells to span the previous columns */}
+            <td>
+              <button onClick={onClearVehicles}>Clear All</button>
+            </td>
+          </tr>
+        </tfoot>
       </table>
-      <button onClick={onClearVehicles}>Clear All</button>
     </div>
   );
 

@@ -22,6 +22,10 @@ body {
 .Form__input,
 .Form__button {
   margin: 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
 }
 
 /* Block: Table Container */
@@ -36,7 +40,15 @@ body {
   border-collapse: collapse;
 }
 
-.Table__header,
+
+.Table__header {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #f2f2f2;
+    font-size: 12px; 
+}
+
 .Table__data {
   border: 1px solid #ddd;
   text-align: left;
@@ -52,10 +64,14 @@ body {
   background-color: #90EE90;
 }
 
+tfoot button {
+  display: block;  /* Ensures the button takes up the full width of the cell */
+}
 /* Block: Error */
 .error {
   color: red;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /* Responsive Design */
@@ -64,11 +80,18 @@ body {
     padding: 10px;
   }
   
-  input, button {
-    width: 100%;
-    box-sizing: border-box;
+  input {
+    padding: 10px;  /* Adjust padding as needed */
+    font-size: 18px;  /* Adjust font size if necessary */
+    border: 1px solid #ccc;  /* Optional: style border if necessary */
+    border-radius: 4px;  /* Optional: for rounded corners */
+    height: 30px;  /* Adjust height as needed */
   }
 
+  button {
+    padding: 12px 24px;  /* Increased padding for larger button size */
+    font-size: 20px;     /* Increased font size for better readability */
+  }
   .Table-container {
     margin: 0 -10px;
   }
@@ -79,7 +102,11 @@ body {
   }
 
   .Table__header {
-    display: none; /* hide headers */
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #f2f2f2;
+    font-size: 10px; 
   }
 
   .Table__data {
@@ -99,21 +126,31 @@ body {
     margin-bottom: 10px;
     border: 1px solid #ddd;
   }
-
-  .form-group {
+  .input-group {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px; /* optional: for spacing between groups */
+    margin-bottom: 10px;
+    width: 50%
   }
   
-  .form-group label {
-    flex: 1;
-    margin-right: 10px; /* optional: for spacing between label and input */
+  .input-group label {
+    width: 200px; /* Adjust width as needed */
+    text-align: right;
+    margin-right: 10px; 
   }
-  
-  .form-group input {
-    flex: 2;
-  }
+
+
+.section-break {
+  border: 0;
+  border-top: 1px solid #ddd;  /* Adjust color as needed */
+  margin: 20px 0;  /* Adjust margin as needed */
+}
+
+.VehicleForm {
+  background-color: #fc9b9b; 
+  padding: 10px;
+  border-radius: 4px; 
+}
 
 }

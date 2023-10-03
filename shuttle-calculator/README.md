@@ -1,3 +1,12 @@
+This project is to solve for the challenge of what vechicles need to go to the put-in, assuming that everyone meets at the take-out, for a river trip.
+
+
+## Docker Duild
+
+` docker build -t shuttle-buddy . `
+## Docker Run
+` docker run -d -p 80:80 shuttle-buddy `
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -69,7 +78,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-` docker build -t my-react-app . `
 
-` docker run -d -p 80:80 my-react-app `
+
 
