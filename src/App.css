@@ -1,0 +1,156 @@
+/* Base styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Block: App */
+.App {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+/* Block: Form */
+.Form__label {
+  display: block;
+  margin-top: 10px;
+}
+
+.Form__input,
+.Form__button {
+  margin: 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Block: Table Container */
+.Table-container {
+  overflow-x: auto;
+}
+
+/* Block: Table */
+.Table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+
+.Table__header {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #f2f2f2;
+    font-size: 12px; 
+}
+
+.Table__data {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.Table__header {
+  background-color: #f2f2f2;
+}
+
+/* Block: Table Row */
+.TableRow--selected {
+  background-color: #90EE90;
+}
+
+tfoot button {
+  display: block;  /* Ensures the button takes up the full width of the cell */
+}
+/* Block: Error */
+.error {
+  color: red;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+  
+  input {
+    padding: 10px;  /* Adjust padding as needed */
+    font-size: 18px;  /* Adjust font size if necessary */
+    border: 1px solid #ccc;  /* Optional: style border if necessary */
+    border-radius: 4px;  /* Optional: for rounded corners */
+    height: 30px;  /* Adjust height as needed */
+  }
+
+  button {
+    padding: 12px 24px;  /* Increased padding for larger button size */
+    font-size: 20px;     /* Increased font size for better readability */
+  }
+  .Table-container {
+    margin: 0 -10px;
+  }
+
+  /* Card-based layout for table on mobile */
+  .Table, .Table__header, .Table__data {
+    display: block;
+  }
+
+  .Table__header {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #f2f2f2;
+    font-size: 10px; 
+  }
+
+  .Table__data {
+    margin-bottom: 0.5rem;
+    border: none; /* remove border */
+  }
+
+  .Table__data::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .TableRow--selected {
+    background-color: #90EE90;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+  }
+  .input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 50%
+  }
+  
+  .input-group label {
+    width: 200px; /* Adjust width as needed */
+    text-align: right;
+    margin-right: 10px; 
+  }
+
+
+.section-break {
+  border: 0;
+  border-top: 1px solid #ddd;  /* Adjust color as needed */
+  margin: 20px 0;  /* Adjust margin as needed */
+}
+
+.VehicleForm {
+  background-color: #fc9b9b; 
+  padding: 10px;
+  border-radius: 4px; 
+}
+
+}
