@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  shuttle-buddy:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    image: shuttle-buddy:latest
+    container_name: shuttle-buddy
+    expose:
+      - "80"
+    networks:
+      - reverse-proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=reverse-proxy" #needed if there are multiple networks attached to this container
+      - "traefik.http.routers.shuttle.tls=true"
+      - "traefik.http.routers.shuttle.rule=Host(`shuttle.${DNS_SUFFIX:-local}`)"
+      - "traefik.http.routers.shuttle.middlewares=middlewares-secured-oauth"
+      - "traefik.http.routers.shuttle.entrypoints=websecure"
+      - "traefik.http.routers.shuttle.tls.certresolver=myresolver"
