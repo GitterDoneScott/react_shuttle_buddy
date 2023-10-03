@@ -20,3 +20,8 @@ services:
       - "traefik.http.routers.shuttle.middlewares=middlewares-secured-oauth"
       - "traefik.http.routers.shuttle.entrypoints=websecure"
       - "traefik.http.routers.shuttle.tls.certresolver=myresolver"
+
+networks:
+  reverse-proxy:
+    external:
+      name: reverse-proxy
