@@ -19,15 +19,6 @@ body {
   margin-top: 10px;
 }
 
-.Form__input,
-.Form__button {
-  margin: 5px;
-  padding: 8px 16px;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
-}
-
 /* Block: Table Container */
 .Table-container {
   overflow-x: auto;
@@ -40,15 +31,6 @@ body {
   border-collapse: collapse;
 }
 
-
-.Table__header {
-    border: 1px solid #ddd;
-    text-align: left;
-    padding: 8px;
-    background-color: #f2f2f2;
-    font-size: 12px; 
-}
-
 .Table__data {
   border: 1px solid #ddd;
   text-align: left;
@@ -56,7 +38,11 @@ body {
 }
 
 .Table__header {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
   background-color: #f2f2f2;
+  font-size: 12px; 
 }
 
 /* Block: Table Row */
@@ -71,7 +57,9 @@ tfoot button {
 .error {
   color: red;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  text-align: center;
 }
 
 /* Responsive Design */
@@ -110,6 +98,7 @@ tfoot button {
   }
 
   .Table__data {
+    text-align: left;
     margin-bottom: 0.5rem;
     border: none; /* remove border */
   }
@@ -140,7 +129,6 @@ tfoot button {
     margin-right: 10px; 
   }
 
-
 .section-break {
   border: 0;
   border-top: 1px solid #ddd;  /* Adjust color as needed */
@@ -148,7 +136,7 @@ tfoot button {
 }
 
 .VehicleForm {
-  background-color: #fc9b9b; 
+  background-color: #fc9b9b59; 
   padding: 10px;
   border-radius: 4px; 
 }

@@ -1,7 +1,7 @@
-This project is to solve for the challenge of what vechicles need to go to the put-in, assuming that everyone meets at the take-out, for a river trip.
+This project is to solve for the challenge of which vehicles need to go to the put-in, assuming that everyone meets at the take-out, for a river trip.
 
-
-## Docker Duild
+It was build on React using Chat-GPT as a starting point.
+## Docker Build
 
 ` docker build -t shuttle-buddy . `
 ## Docker Run

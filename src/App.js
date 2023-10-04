@@ -42,53 +42,54 @@ function App() {
     const totalBoatsNum = parseInt(totalBoats, 10);
     const totalBoatersNum = parseInt(totalBoaters, 10);
     setError('');
-
+  
     if (isNaN(totalBoatsNum) || isNaN(totalBoatersNum) || totalBoatsNum < 0 || totalBoatersNum < 0) {
       setError('Please enter valid numbers for total boats and boaters.');
       return;
     }
-
-    const sortedVehicles = [...vehicles].sort((a, b) => (b.boaterCapacity + b.boatCapacity) - (a.boaterCapacity + a.boatCapacity));
-
+  
     let remainingBoats = totalBoatsNum;
     let remainingBoaters = totalBoatersNum;
-    const selectedVehicles = [];
-
-    for (let vehicle of sortedVehicles) {
-      if (remainingBoats > 0 || remainingBoaters > 0) {
+    const selectedVehicles = vehicles.map(vehicle => ({ ...vehicle, isSelected: false }));  // Initialize all vehicles as unselected
+  
+    while ((remainingBoats > 0 || remainingBoaters > 0) && selectedVehicles.some(vehicle => !vehicle.isSelected)) {
+      let bestVehicleIndex = -1;
+      let bestDifference = Infinity;
+  
+      selectedVehicles.forEach((vehicle, index) => {
+        if (!vehicle.isSelected) {
+          const boatDifference = Math.abs(vehicle.boatCapacity - remainingBoats);
+          const boaterDifference = Math.abs(vehicle.boaterCapacity - remainingBoaters);
+          const totalDifference = boatDifference + boaterDifference;
+  
+          if (totalDifference < bestDifference) {
+            bestDifference = totalDifference;
+            bestVehicleIndex = index;
+          }
+        }
+      });
+  
+      if (bestVehicleIndex !== -1) {
+        const vehicle = selectedVehicles[bestVehicleIndex];
         const canCarryBoats = Math.min(vehicle.boatCapacity, remainingBoats);
         const canCarryBoaters = Math.min(vehicle.boaterCapacity, remainingBoaters);
-
-        if (canCarryBoats > 0 || canCarryBoaters > 0) {
-          selectedVehicles.push({ ...vehicle, isSelected: true });
-          remainingBoats -= canCarryBoats;
-          remainingBoaters -= canCarryBoaters;
-        } else {
-          selectedVehicles.push({ ...vehicle, isSelected: false });
-        }
+        selectedVehicles[bestVehicleIndex] = { ...vehicle, isSelected: true };  // Update the isSelected property of the selected vehicle
+        remainingBoats -= canCarryBoats;
+        remainingBoaters -= canCarryBoaters;
       } else {
-        selectedVehicles.push({ ...vehicle, isSelected: false });
+        break;  // No more efficient vehicles available
       }
     }
-
+  
     if (remainingBoats > 0 || remainingBoaters > 0) {
       setError('Not enough capacity to shuttle all boats and boaters.');
     }
-
+  
     setVehicles(selectedVehicles);
   };
 
   return (
     <div className="App">
-        <div className="input-group">
-            <label>Total Boats:</label>
-            <input
-                type="number"
-                value={totalBoats}
-                onChange={e => setTotalBoats(e.target.value)}
-                placeholder="Total Boats"
-            />
-        </div>
         <div className="input-group">
             <label>Total Boaters:</label>
             <input
@@ -98,11 +99,20 @@ function App() {
                 placeholder="Total Boaters"
             />
         </div>
+        <div className="input-group">
+            <label>Total Boats:</label>
+            <input
+                type="number"
+                value={totalBoats}
+                onChange={e => setTotalBoats(e.target.value)}
+                placeholder="Total Boats"
+            />
+        </div>
         <hr className="section-break" />  {/* Horizontal line */}
       <VehicleForm onAddVehicle={addVehicle} />
       {error && <div className="error">{error}</div>}
       <VehicleTable vehicles={vehicles} onRemoveVehicle={removeVehicle} onClearVehicles={clearVehicles} />
-      <button onClick={calculate}>Calculate</button>
+      <button className="button" onClick={calculate}>Calculate</button>
 
     </div>
   );
@@ -153,7 +163,7 @@ function VehicleForm({ onAddVehicle }) {
                 required
             />
         </div>
-        <button type="submit">Add Vehicle</button>
+        <button className="button" type="submit">Add Vehicle</button>
     </form>
   );
 }
@@ -167,7 +177,7 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
             <th>Vehicle Description</th>
             <th>Boater Capacity</th>
             <th>Boat Capacity</th>
-            <th>Action</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -176,15 +186,15 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
               <td data-label="Description">{vehicle.description}</td>
               <td data-label="Boater Capacity">{vehicle.boaterCapacity}</td>
               <td data-label="Boat Capacity">{vehicle.boatCapacity}</td>
-              <td data-label="Action"><button onClick={() => onRemoveVehicle(vehicle.id)}>Remove</button></td>
+              <td data-label="Action"><button class="button" onClick={() => onRemoveVehicle(vehicle.id)}>Remove</button></td>
             </tr>
           ))}
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="3"></td>  {/* Empty cells to span the previous columns */}
+            <td colSpan="3"></td>
             <td>
-              <button onClick={onClearVehicles}>Clear All</button>
+              <button className="button" onClick={onClearVehicles}>Clear</button>
             </td>
           </tr>
         </tfoot>
