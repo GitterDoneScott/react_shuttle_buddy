@@ -1,13 +1,8 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
-import Dexie from 'dexie';
+
 import './App.css';
-
-const db = new Dexie('VehiclesDB');
-db.version(1).stores({
-  vehicles: '++id, description, boaterCapacity, boatCapacity'
-});
-
+import db from './db';
 
 
 function App() {
@@ -112,7 +107,7 @@ function App() {
       <VehicleForm onAddVehicle={addVehicle} />
       {error && <div className="error">{error}</div>}
       <VehicleTable vehicles={vehicles} onRemoveVehicle={removeVehicle} onClearVehicles={clearVehicles} />
-      <button className="button" onClick={calculate}>Calculate</button>
+      <button className="button" onClick={calculate}>Highlight Shuttle Vehicles</button>
 
     </div>
   );
@@ -177,7 +172,7 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
             <th>Vehicle Description</th>
             <th>Boater Capacity</th>
             <th>Boat Capacity</th>
-            <th></th>
+            <th><button className="button" onClick={onClearVehicles}>Remove All</button></th>
           </tr>
         </thead>
         <tbody>
@@ -186,18 +181,10 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
               <td data-label="Description">{vehicle.description}</td>
               <td data-label="Boater Capacity">{vehicle.boaterCapacity}</td>
               <td data-label="Boat Capacity">{vehicle.boatCapacity}</td>
-              <td data-label="Action"><button class="button" onClick={() => onRemoveVehicle(vehicle.id)}>Remove</button></td>
+              <td data-label="Action"><button className="button" onClick={() => onRemoveVehicle(vehicle.id)}>Remove</button></td>
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan="3"></td>
-            <td>
-              <button className="button" onClick={onClearVehicles}>Clear</button>
-            </td>
-          </tr>
-        </tfoot>
       </table>
     </div>
   );

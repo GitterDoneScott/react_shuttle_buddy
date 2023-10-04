@@ -28,6 +28,7 @@ body {
 .Table {
   width: 100%;
   margin-top: 20px;
+  margin-bottom: 20px;
   border-collapse: collapse;
 }
 
@@ -101,13 +102,6 @@ tfoot button {
     text-align: left;
     margin-bottom: 0.5rem;
     border: none; /* remove border */
-  }
-
-  .Table__data::before {
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
   }
 
   .TableRow--selected {
