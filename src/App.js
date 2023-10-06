@@ -95,6 +95,10 @@ function App() {
 
   return (
     <div className="App">
+  <div class="Header">
+    <img src="logo.svg" alt="App Icon" class="Header-icon" />
+    <h1>Shuttle Buddy</h1>
+  </div>
         <div className="input-group">
             <label>Total Boaters:</label>
             <input
@@ -117,7 +121,7 @@ function App() {
       <VehicleForm onAddVehicle={addVehicle} />
       {error && <div className="error">{error}</div>}
       <VehicleTable vehicles={vehicles} onRemoveVehicle={removeVehicle} onClearVehicles={clearVehicles} />
-      <button className="button" onClick={calculate}>Highlight Shuttle Vehicles</button>
+      <button aria-label="Calculate and Highlight Shuttle Vehicles" className="button" onClick={calculate}>Highlight Shuttle Vehicles</button>
 
     </div>
   );
@@ -180,9 +184,9 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
       <table className="Table">
         <thead>
           <tr>
-            <th>Vehicle Description</th>
-            <th>Boater Capacity</th>
-            <th>Boat Capacity</th>
+            <th>Vehicle Desc.</th>
+            <th>Boater Cap.</th>
+            <th>Boat Cap.</th>
             <th><button className="button" onClick={onClearVehicles}>Remove All</button></th>
           </tr>
         </thead>
@@ -190,8 +194,8 @@ function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
           {vehicles.map(vehicle => (
             <tr key={vehicle.id} className={vehicle.isSelected ? 'TableRow--selected' : ''}>
               <td data-label="Description">{vehicle.description}</td>
-              <td data-label="Boater Capacity">{vehicle.boaterCapacity}</td>
-              <td data-label="Boat Capacity">{vehicle.boatCapacity}</td>
+              <td data-label="Boater Capacity" className="center-text">{vehicle.boaterCapacity}</td>
+              <td data-label="Boat Capacity" className="center-text">{vehicle.boatCapacity}</td>
               <td data-label="Action"><button className="button" onClick={() => onRemoveVehicle(vehicle.id)}>Remove</button></td>
             </tr>
           ))}
