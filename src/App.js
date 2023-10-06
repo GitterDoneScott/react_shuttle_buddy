@@ -12,14 +12,24 @@ function App() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    db.vehicles.toArray().then(setVehicles);
+    db.vehicles.toArray()
+      .then(data => {
+        //console.log('Database query completed:', data);
+        setVehicles(data);
+      })
+      .catch(error => {
+        console.error('Database query failed:', error);
+      });
   }, []);
 
   const addVehicle = (vehicle) => {
     db.vehicles.add(vehicle).then(() => {
       setVehicles([...vehicles, vehicle]);
+    }).catch(error => {
+      console.error('Error adding vehicle:', error);
     });
   };
+  
 
   const removeVehicle = (id) => {
     db.vehicles.delete(id).then(() => {
@@ -164,6 +174,7 @@ function VehicleForm({ onAddVehicle }) {
 }
 
 function VehicleTable({ vehicles, onRemoveVehicle, onClearVehicles }) {
+  // console.log('Rendering vehicles in VehicleTable:', vehicles);  // Log the vehicles prop to ensure it's correct
   return (
     <div className="Table-container">
       <table className="Table">
