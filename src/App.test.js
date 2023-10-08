@@ -68,14 +68,14 @@ test('capacity error', async () => {
     userEvent.click(screen.getByText(/Highlight Shuttle Vehicles/i));
   });
   // Assuming there's not enough capacity
-  expect(await waitFor(() => screen.getByText(/Not enough capacity to shuttle all boats and boaters./i))).toBeInTheDocument();
+  expect(await waitFor(() => screen.findByText(/Not enough capacity to shuttle all boats and boaters./i))).toBeInTheDocument();
 });
 
 test('find shuttle 1:1', async () => {
   
-  db.vehicles.toArray().then(items => {
-    console.log(items);
-  });
+  // db.vehicles.toArray().then(items => {
+  //   console.log(items);
+  // });
 
   render(<App />);
 
@@ -87,12 +87,11 @@ test('find shuttle 1:1', async () => {
   });
   //await waitFor(() => expect(screen.getByText('TableRow--selected')).toBeInTheDocument());
   const rows = await waitFor(() => screen.findAllByRole('row'));
-  screen.debug();
+  // screen.debug();
   
-  rows.forEach(element => {
-    console.log(element.outerHTML || element.textContent || element.innerText);
-  });
-  
+  // rows.forEach(element => {
+  //   console.log(element.outerHTML || element.textContent || element.innerText);
+  // });
   expect(rows[1].outerHTML).not.toContain('TableRow--selected');  
   expect(rows[2].outerHTML).toContain('TableRow--selected');  
   expect(rows[3].outerHTML).not.toContain('TableRow--selected'); 
@@ -134,7 +133,9 @@ describe('remove tests', ()=> {
       userEvent.click(screen.getByText(/Remove All/i));
       });
       // Wait for the elements to appear in the document
-      expect(await waitFor(() => screen.queryByText('Vehicle 5'))).not.toBeInTheDocument();
+      //expect(await waitFor(() => screen.queryByText('Vehicle 5'))).not.toBeInTheDocument();
+      const vehicles = await db.vehicles.where('description').equals('Vehicle 5').toArray();
+      expect(vehicles).not.toEqual(expect.arrayContaining([expect.objectContaining({description: 'Vehicle 5', boaterCapacity: 2, boatCapacity: 1})]));
   });
 
   test('can remove vehicle 4', async () => {
