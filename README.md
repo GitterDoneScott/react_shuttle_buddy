@@ -29,6 +29,8 @@ You may also see any lint errors in the console.
 
 ### `npm test`
 
+[Async Testing Article](https://www.digitalocean.com/community/tutorials/how-to-test-a-react-app-with-jest-and-react-testing-library)
+
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
